@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PozosPemexModelStoreContainer" CdmEntityContainer="PozosPemexEntities">
+    <EntitySetMapping Name="Activoes">
+      <EntityTypeMapping TypeName="PozosPemexModel.Activo">
+        <MappingFragment StoreEntitySet="Activo">
+          <ScalarProperty Name="ActivoId" ColumnName="ActivoId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Campoes">
+      <EntityTypeMapping TypeName="PozosPemexModel.Campo">
+        <MappingFragment StoreEntitySet="Campo">
+          <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ActivoId" ColumnName="ActivoId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="Declinacion" ColumnName="Declinacion" />
+          <ScalarProperty Name="GastoFijo" ColumnName="GastoFijo" />
+          <ScalarProperty Name="GastoVariable" ColumnName="GastoVariable" />
+          <ScalarProperty Name="GastoTotal" ColumnName="GastoTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipoes">
+      <EntityTypeMapping TypeName="PozosPemexModel.Equipo">
+        <MappingFragment StoreEntitySet="Equipo">
+          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Compania" ColumnName="Compania" />
+          <ScalarProperty Name="Renta" ColumnName="Renta" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Operacions">
+      <EntityTypeMapping TypeName="PozosPemexModel.Operacion">
+        <MappingFragment StoreEntitySet="Operacion">
+          <ScalarProperty Name="OperacionId" ColumnName="OperacionId" />
+          <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+          <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+          <ScalarProperty Name="Opex" ColumnName="Opex" />
+          <ScalarProperty Name="GasAceite" ColumnName="GasAceite" />
+          <ScalarProperty Name="Rga" ColumnName="Rga" />
+          <ScalarProperty Name="tasaImpositiva" ColumnName="tasaImpositiva" />
+          <ScalarProperty Name="Paridad" ColumnName="Paridad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pozoes">
+      <EntityTypeMapping TypeName="PozosPemexModel.Pozo">
+        <MappingFragment StoreEntitySet="Pozo">
+          <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Barriles" ColumnName="Barriles" />
+          <ScalarProperty Name="Meses" ColumnName="Meses" />
+          <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Precios">
+      <EntityTypeMapping TypeName="PozosPemexModel.Precio">
+        <MappingFragment StoreEntitySet="Precio">
+          <ScalarProperty Name="PrecioId" ColumnName="PrecioId" />
+          <ScalarProperty Name="PrecioCrudo" ColumnName="PrecioCrudo" />
+          <ScalarProperty Name="PrecioGas" ColumnName="PrecioGas" />
+          <ScalarProperty Name="Ano" ColumnName="Ano" />
+          <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Regions">
+      <EntityTypeMapping TypeName="PozosPemexModel.Region">
+        <MappingFragment StoreEntitySet="Region">
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resultadoes">
+      <EntityTypeMapping TypeName="PozosPemexModel.Resultado">
+        <MappingFragment StoreEntitySet="Resultado">
+          <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
+          <ScalarProperty Name="Produccion" ColumnName="Produccion" />
+          <ScalarProperty Name="IngresoTotalDolares" ColumnName="IngresoTotalDolares" />
+          <ScalarProperty Name="IngresoTotalPesos" ColumnName="IngresoTotalPesos" />
+          <ScalarProperty Name="Vpn" ColumnName="Vpn" />
+          <ScalarProperty Name="VpnDi" ColumnName="VpnDi" />
+          <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+          <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+          <ScalarProperty Name="OperacionId" ColumnName="OperacionId" />
+          <ScalarProperty Name="PrecioId" ColumnName="PrecioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="PozosPemexModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
