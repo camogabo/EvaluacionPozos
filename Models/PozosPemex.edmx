@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PozosPemexModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activo">
+          <Key>
+            <PropertyRef Name="ActivoId" />
+          </Key>
+          <Property Name="ActivoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Campo">
+          <Key>
+            <PropertyRef Name="CampoId" />
+          </Key>
+          <Property Name="CampoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ActivoId" Type="int" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+          <Property Name="Declinacion" Type="float" Nullable="false" />
+          <Property Name="GastoFijo" Type="float" Nullable="false" />
+          <Property Name="GastoVariable" Type="float" Nullable="false" />
+          <Property Name="GastoTotal" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="EquipoId" />
+          </Key>
+          <Property Name="EquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Compania" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Renta" Type="float" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="OperacionId" />
+          </Key>
+          <Property Name="OperacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampoId" Type="int" Nullable="false" />
+          <Property Name="EquipoId" Type="int" Nullable="false" />
+          <Property Name="PozoId" Type="int" Nullable="false" />
+          <Property Name="Opex" Type="float" Nullable="false" />
+          <Property Name="GasAceite" Type="float" Nullable="false" />
+          <Property Name="Rga" Type="float" Nullable="false" />
+          <Property Name="tasaImpositiva" Type="float" Nullable="false" />
+          <Property Name="Paridad" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pozo">
+          <Key>
+            <PropertyRef Name="PozoId" />
+          </Key>
+          <Property Name="PozoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Barriles" Type="int" Nullable="false" />
+          <Property Name="Meses" Type="int" Nullable="false" />
+          <Property Name="CampoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Precio">
+          <Key>
+            <PropertyRef Name="PrecioId" />
+          </Key>
+          <Property Name="PrecioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrecioCrudo" Type="float" Nullable="false" />
+          <Property Name="PrecioGas" Type="float" Nullable="false" />
+          <Property Name="Ano" Type="int" Nullable="false" />
+          <Property Name="CampoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionId" />
+          </Key>
+          <Property Name="RegionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resultado">
+          <Key>
+            <PropertyRef Name="ResultadoId" />
+          </Key>
+          <Property Name="ResultadoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Produccion" Type="int" Nullable="false" />
+          <Property Name="IngresoTotalDolares" Type="float" Nullable="false" />
+          <Property Name="IngresoTotalPesos" Type="float" Nullable="false" />
+          <Property Name="Vpn" Type="float" Nullable="false" />
+          <Property Name="VpnDi" Type="float" Nullable="false" />
+          <Property Name="CampoId" Type="int" Nullable="false" />
+          <Property Name="PozoId" Type="int" Nullable="false" />
+          <Property Name="OperacionId" Type="int" Nullable="false" />
+          <Property Name="PrecioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contrasena" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Activo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campo_Activo">
+          <End Role="Activo" Type="Self.Activo" Multiplicity="1" />
+          <End Role="Campo" Type="Self.Campo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activo">
+              <PropertyRef Name="ActivoId" />
+            </Principal>
+            <Dependent Role="Campo">
+              <PropertyRef Name="ActivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Campo" Type="Self.Campo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Campo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Pozo">
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozo">
+              <PropertyRef Name="PozoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="PozoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozo_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Pozo">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="OperacionId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="OperacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Pozo">
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozo">
+              <PropertyRef Name="PozoId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="PozoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Precio">
+          <End Role="Precio" Type="Self.Precio" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precio">
+              <PropertyRef Name="PrecioId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="PrecioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_calcularOpex" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="gas_aceite" Type="float" Mode="In" />
+          <Parameter Name="rga" Type="float" Mode="In" />
+          <Parameter Name="tasaImpositiva" Type="float" Mode="In" />
+          <Parameter Name="paridad" Type="float" Mode="In" />
+          <Parameter Name="campo_id" Type="int" Mode="In" />
+          <Parameter Name="equipo_id" Type="int" Mode="In" />
+          <Parameter Name="pozo_id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="PozosPemexModelStoreContainer">
+          <EntitySet Name="Activo" EntityType="Self.Activo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Campo" EntityType="Self.Campo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pozo" EntityType="Self.Pozo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Precio" EntityType="Self.Precio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resultado" EntityType="Self.Resultado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Activo_Region" Association="Self.FK_Activo_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campo_Activo" Association="Self.FK_Campo_Activo">
+            <End Role="Activo" EntitySet="Activo" />
+            <End Role="Campo" EntitySet="Campo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campo_Region" Association="Self.FK_Campo_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Campo" EntitySet="Campo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Region" Association="Self.FK_Equipo_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Campo" Association="Self.FK_Operacion_Campo">
+            <End Role="Campo" EntitySet="Campo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Equipo" Association="Self.FK_Operacion_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Pozo" Association="Self.FK_Operacion_Pozo">
+            <End Role="Pozo" EntitySet="Pozo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozo_Campo" Association="Self.FK_Pozo_Campo">
+            <End Role="Campo" EntitySet="Campo" />
+            <End Role="Pozo" EntitySet="Pozo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Campo" Association="Self.FK_Precio_Campo">
+            <End Role="Campo" EntitySet="Campo" />
+            <End Role="Precio" EntitySet="Precio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Campo" Association="Self.FK_Resultado_Campo">
+            <End Role="Campo" EntitySet="Campo" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Operacion" Association="Self.FK_Resultado_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Pozo" Association="Self.FK_Resultado_Pozo">
+            <End Role="Pozo" EntitySet="Pozo" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Precio" Association="Self.FK_Resultado_Precio">
+            <End Role="Precio" EntitySet="Precio" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Region" Association="Self.FK_Usuario_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PozosPemexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activo">
+          <Key>
+            <PropertyRef Name="ActivoId" />
+          </Key>
+          <Property Name="ActivoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Activo_Region" FromRole="Activo" ToRole="Region" />
+          <NavigationProperty Name="Campoes" Relationship="Self.FK_Campo_Activo" FromRole="Activo" ToRole="Campo" />
+        </EntityType>
+        <EntityType Name="Campo">
+          <Key>
+            <PropertyRef Name="CampoId" />
+          </Key>
+          <Property Name="CampoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActivoId" Type="Int32" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <Property Name="Declinacion" Type="Double" Nullable="false" />
+          <Property Name="GastoFijo" Type="Double" Nullable="false" />
+          <Property Name="GastoVariable" Type="Double" Nullable="false" />
+          <Property Name="GastoTotal" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Activo" Relationship="Self.FK_Campo_Activo" FromRole="Campo" ToRole="Activo" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Campo_Region" FromRole="Campo" ToRole="Region" />
+          <NavigationProperty Name="Operacions" Relationship="Self.FK_Operacion_Campo" FromRole="Campo" ToRole="Operacion" />
+          <NavigationProperty Name="Pozoes" Relationship="Self.FK_Pozo_Campo" FromRole="Campo" ToRole="Pozo" />
+          <NavigationProperty Name="Precios" Relationship="Self.FK_Precio_Campo" FromRole="Campo" ToRole="Precio" />
+          <NavigationProperty Name="Resultadoes" Relationship="Self.FK_Resultado_Campo" FromRole="Campo" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="EquipoId" />
+          </Key>
+          <Property Name="EquipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Compania" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Renta" Type="Double" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Equipo_Region" FromRole="Equipo" ToRole="Region" />
+          <NavigationProperty Name="Operacions" Relationship="Self.FK_Operacion_Equipo" FromRole="Equipo" ToRole="Operacion" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="OperacionId" />
+          </Key>
+          <Property Name="OperacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampoId" Type="Int32" Nullable="false" />
+          <Property Name="EquipoId" Type="Int32" Nullable="false" />
+          <Property Name="PozoId" Type="Int32" Nullable="false" />
+          <Property Name="Opex" Type="Double" Nullable="false" />
+          <Property Name="GasAceite" Type="Double" Nullable="false" />
+          <Property Name="Rga" Type="Double" Nullable="false" />
+          <Property Name="tasaImpositiva" Type="Double" Nullable="false" />
+          <Property Name="Paridad" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Campo" Relationship="Self.FK_Operacion_Campo" FromRole="Operacion" ToRole="Campo" />
+          <NavigationProperty Name="Equipo" Relationship="Self.FK_Operacion_Equipo" FromRole="Operacion" ToRole="Equipo" />
+          <NavigationProperty Name="Pozo" Relationship="Self.FK_Operacion_Pozo" FromRole="Operacion" ToRole="Pozo" />
+          <NavigationProperty Name="Resultadoes" Relationship="Self.FK_Resultado_Operacion" FromRole="Operacion" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Pozo">
+          <Key>
+            <PropertyRef Name="PozoId" />
+          </Key>
+          <Property Name="PozoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Barriles" Type="Int32" Nullable="false" />
+          <Property Name="Meses" Type="Int32" Nullable="false" />
+          <Property Name="CampoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Campo" Relationship="Self.FK_Pozo_Campo" FromRole="Pozo" ToRole="Campo" />
+          <NavigationProperty Name="Operacions" Relationship="Self.FK_Operacion_Pozo" FromRole="Pozo" ToRole="Operacion" />
+          <NavigationProperty Name="Resultadoes" Relationship="Self.FK_Resultado_Pozo" FromRole="Pozo" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Precio">
+          <Key>
+            <PropertyRef Name="PrecioId" />
+          </Key>
+          <Property Name="PrecioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrecioCrudo" Type="Double" Nullable="false" />
+          <Property Name="PrecioGas" Type="Double" Nullable="false" />
+          <Property Name="Ano" Type="Int32" Nullable="false" />
+          <Property Name="CampoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Campo" Relationship="Self.FK_Precio_Campo" FromRole="Precio" ToRole="Campo" />
+          <NavigationProperty Name="Resultadoes" Relationship="Self.FK_Resultado_Precio" FromRole="Precio" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionId" />
+          </Key>
+          <Property Name="RegionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Activoes" Relationship="Self.FK_Activo_Region" FromRole="Region" ToRole="Activo" />
+          <NavigationProperty Name="Campoes" Relationship="Self.FK_Campo_Region" FromRole="Region" ToRole="Campo" />
+          <NavigationProperty Name="Equipoes" Relationship="Self.FK_Equipo_Region" FromRole="Region" ToRole="Equipo" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Region" FromRole="Region" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Resultado">
+          <Key>
+            <PropertyRef Name="ResultadoId" />
+          </Key>
+          <Property Name="ResultadoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Produccion" Type="Int32" Nullable="false" />
+          <Property Name="IngresoTotalDolares" Type="Double" Nullable="false" />
+          <Property Name="IngresoTotalPesos" Type="Double" Nullable="false" />
+          <Property Name="Vpn" Type="Double" Nullable="false" />
+          <Property Name="VpnDi" Type="Double" Nullable="false" />
+          <Property Name="CampoId" Type="Int32" Nullable="false" />
+          <Property Name="PozoId" Type="Int32" Nullable="false" />
+          <Property Name="OperacionId" Type="Int32" Nullable="false" />
+          <Property Name="PrecioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Campo" Relationship="Self.FK_Resultado_Campo" FromRole="Resultado" ToRole="Campo" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_Resultado_Operacion" FromRole="Resultado" ToRole="Operacion" />
+          <NavigationProperty Name="Pozo" Relationship="Self.FK_Resultado_Pozo" FromRole="Resultado" ToRole="Pozo" />
+          <NavigationProperty Name="Precio" Relationship="Self.FK_Resultado_Precio" FromRole="Resultado" ToRole="Precio" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Usuario_Region" FromRole="Usuario" ToRole="Region" />
+        </EntityType>
+        <Association Name="FK_Activo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campo_Activo">
+          <End Role="Activo" Type="Self.Activo" Multiplicity="1" />
+          <End Role="Campo" Type="Self.Campo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activo">
+              <PropertyRef Name="ActivoId" />
+            </Principal>
+            <Dependent Role="Campo">
+              <PropertyRef Name="ActivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Campo" Type="Self.Campo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Campo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozo_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Pozo">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Campo">
+          <End Role="Campo" Type="Self.Campo" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campo">
+              <PropertyRef Name="CampoId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="CampoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipo_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Pozo">
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozo">
+              <PropertyRef Name="PozoId" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="PozoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="OperacionId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="OperacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Pozo">
+          <End Role="Pozo" Type="Self.Pozo" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozo">
+              <PropertyRef Name="PozoId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="PozoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Precio">
+          <End Role="Precio" Type="Self.Precio" Multiplicity="1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precio">
+              <PropertyRef Name="PrecioId" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="PrecioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PozosPemexEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activoes" EntityType="Self.Activo" />
+          <EntitySet Name="Campoes" EntityType="Self.Campo" />
+          <EntitySet Name="Equipoes" EntityType="Self.Equipo" />
+          <EntitySet Name="Operacions" EntityType="Self.Operacion" />
+          <EntitySet Name="Pozoes" EntityType="Self.Pozo" />
+          <EntitySet Name="Precios" EntityType="Self.Precio" />
+          <EntitySet Name="Regions" EntityType="Self.Region" />
+          <EntitySet Name="Resultadoes" EntityType="Self.Resultado" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Activo_Region" Association="Self.FK_Activo_Region">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Activo" EntitySet="Activoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campo_Activo" Association="Self.FK_Campo_Activo">
+            <End Role="Activo" EntitySet="Activoes" />
+            <End Role="Campo" EntitySet="Campoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campo_Region" Association="Self.FK_Campo_Region">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Campo" EntitySet="Campoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Campo" Association="Self.FK_Operacion_Campo">
+            <End Role="Campo" EntitySet="Campoes" />
+            <End Role="Operacion" EntitySet="Operacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozo_Campo" Association="Self.FK_Pozo_Campo">
+            <End Role="Campo" EntitySet="Campoes" />
+            <End Role="Pozo" EntitySet="Pozoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Campo" Association="Self.FK_Precio_Campo">
+            <End Role="Campo" EntitySet="Campoes" />
+            <End Role="Precio" EntitySet="Precios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Campo" Association="Self.FK_Resultado_Campo">
+            <End Role="Campo" EntitySet="Campoes" />
+            <End Role="Resultado" EntitySet="Resultadoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Region" Association="Self.FK_Equipo_Region">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Equipo" EntitySet="Equipoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Equipo" Association="Self.FK_Operacion_Equipo">
+            <End Role="Equipo" EntitySet="Equipoes" />
+            <End Role="Operacion" EntitySet="Operacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Pozo" Association="Self.FK_Operacion_Pozo">
+            <End Role="Pozo" EntitySet="Pozoes" />
+            <End Role="Operacion" EntitySet="Operacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Operacion" Association="Self.FK_Resultado_Operacion">
+            <End Role="Operacion" EntitySet="Operacions" />
+            <End Role="Resultado" EntitySet="Resultadoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Pozo" Association="Self.FK_Resultado_Pozo">
+            <End Role="Pozo" EntitySet="Pozoes" />
+            <End Role="Resultado" EntitySet="Resultadoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Precio" Association="Self.FK_Resultado_Precio">
+            <End Role="Precio" EntitySet="Precios" />
+            <End Role="Resultado" EntitySet="Resultadoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Region" Association="Self.FK_Usuario_Region">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <FunctionImport Name="sp_calcularOpex">
+            <Parameter Name="gas_aceite" Mode="In" Type="Double" />
+            <Parameter Name="rga" Mode="In" Type="Double" />
+            <Parameter Name="tasaImpositiva" Mode="In" Type="Double" />
+            <Parameter Name="paridad" Mode="In" Type="Double" />
+            <Parameter Name="campo_id" Mode="In" Type="Int32" />
+            <Parameter Name="equipo_id" Mode="In" Type="Int32" />
+            <Parameter Name="pozo_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PozosPemexModelStoreContainer" CdmEntityContainer="PozosPemexEntities">
+          <EntitySetMapping Name="Activoes">
+            <EntityTypeMapping TypeName="PozosPemexModel.Activo">
+              <MappingFragment StoreEntitySet="Activo">
+                <ScalarProperty Name="ActivoId" ColumnName="ActivoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Campoes">
+            <EntityTypeMapping TypeName="PozosPemexModel.Campo">
+              <MappingFragment StoreEntitySet="Campo">
+                <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ActivoId" ColumnName="ActivoId" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="Declinacion" ColumnName="Declinacion" />
+                <ScalarProperty Name="GastoFijo" ColumnName="GastoFijo" />
+                <ScalarProperty Name="GastoVariable" ColumnName="GastoVariable" />
+                <ScalarProperty Name="GastoTotal" ColumnName="GastoTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipoes">
+            <EntityTypeMapping TypeName="PozosPemexModel.Equipo">
+              <MappingFragment StoreEntitySet="Equipo">
+                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Compania" ColumnName="Compania" />
+                <ScalarProperty Name="Renta" ColumnName="Renta" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacions">
+            <EntityTypeMapping TypeName="PozosPemexModel.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="OperacionId" ColumnName="OperacionId" />
+                <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+                <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+                <ScalarProperty Name="Opex" ColumnName="Opex" />
+                <ScalarProperty Name="GasAceite" ColumnName="GasAceite" />
+                <ScalarProperty Name="Rga" ColumnName="Rga" />
+                <ScalarProperty Name="tasaImpositiva" ColumnName="tasaImpositiva" />
+                <ScalarProperty Name="Paridad" ColumnName="Paridad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pozoes">
+            <EntityTypeMapping TypeName="PozosPemexModel.Pozo">
+              <MappingFragment StoreEntitySet="Pozo">
+                <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Barriles" ColumnName="Barriles" />
+                <ScalarProperty Name="Meses" ColumnName="Meses" />
+                <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Precios">
+            <EntityTypeMapping TypeName="PozosPemexModel.Precio">
+              <MappingFragment StoreEntitySet="Precio">
+                <ScalarProperty Name="PrecioId" ColumnName="PrecioId" />
+                <ScalarProperty Name="PrecioCrudo" ColumnName="PrecioCrudo" />
+                <ScalarProperty Name="PrecioGas" ColumnName="PrecioGas" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+                <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="PozosPemexModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resultadoes">
+            <EntityTypeMapping TypeName="PozosPemexModel.Resultado">
+              <MappingFragment StoreEntitySet="Resultado">
+                <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
+                <ScalarProperty Name="Produccion" ColumnName="Produccion" />
+                <ScalarProperty Name="IngresoTotalDolares" ColumnName="IngresoTotalDolares" />
+                <ScalarProperty Name="IngresoTotalPesos" ColumnName="IngresoTotalPesos" />
+                <ScalarProperty Name="Vpn" ColumnName="Vpn" />
+                <ScalarProperty Name="VpnDi" ColumnName="VpnDi" />
+                <ScalarProperty Name="CampoId" ColumnName="CampoId" />
+                <ScalarProperty Name="PozoId" ColumnName="PozoId" />
+                <ScalarProperty Name="OperacionId" ColumnName="OperacionId" />
+                <ScalarProperty Name="PrecioId" ColumnName="PrecioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="PozosPemexModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
